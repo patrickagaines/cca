@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Open Sans';
+        src: url("/resources/fonts/OpenSans-VariableFont.ttf");
+    }
+
+    html {
+        font-size: 16px;
+    }
+
+    body {
+        font-family: 'Open Sans', ui-sans-serif, system-ui, sans-serif;
+        font-variation-settings: 'wght' 400;
+        @apply bg-ground
+        text-paragraph;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-variation-settings: 'wght' 600;
+        @apply text-heading;
+    }
+}
