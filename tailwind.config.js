@@ -8,17 +8,16 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-
     theme: {
-        colors: {
-            'primary': '#669DAE',
-            'ground': '#24373C',
-            'surface': '#324C53',
-            'border': '#607176',
-            'heading': '#e9ebeb',
-            'paragraph': '#bdc3c4'
-        },
         extend: {
+            colors: {
+                'primary': '#669DAE',
+                'ground': '#24373C',
+                'surface': '#324C53',
+                'border': '#607176',
+                'heading': '#e9ebeb',
+                'paragraph': '#bdc3c4'
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
