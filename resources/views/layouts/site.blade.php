@@ -6,7 +6,7 @@
 
         <title>Document</title>
 
-        @vite(['resources/css/site.css', 'resources/js/app.js'])
+        @vite(['resources/css/site.css'])
     </head>
     <body class="antialiased">
         <div class="min-h-screen">
