@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Image;
+use App\Models\Post;
+use Exception;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Post::factory(20)->create()->each(function (Post $post) {
+            try {
+                $numImages = random_int(5, 10);
+            } catch (Exception) {
+                $numImages = 5;
+            }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            for ($i = 0; $i < $numImages; $i++) {
+                Image::factory()->for($post)
+                    ->state([
+                        'display_order' => $i,
+                        'created_at' => $post->created_at,
+                        'updated_at' => fake()->dateTimeBetween($post->created_at)
+                    ])
+                    ->create();
+            }
+        });
     }
 }
