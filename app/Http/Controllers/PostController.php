@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct(private Post $post)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $posts = $this->post->orderBy('created_at', 'desc')
+                            ->get();
+
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
