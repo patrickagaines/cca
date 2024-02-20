@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
                 $numImages = 5;
             }
 
-            for ($i = 0; $i < $numImages; $i++) {
+            for ($i = 1; $i <= $numImages; $i++) {
                 Image::factory()->for($post)
                     ->state([
                         'display_order' => $i,
