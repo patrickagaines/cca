@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+
 
 class PostController extends Controller
 {
@@ -17,14 +18,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->post
-            ->orderBy('created_at', 'desc')
-            ->with('images',
-                function (HasMany $query) {
-                    $query->where('display_order', '=', 0)
-                          ->get();
-                })
-            ->get();
+        $posts = $this->post->with(['images' => function (Builder $query) {
+            $query->select(['id', 'post_id', 'file_path'])
+                  ->orderBy('display_order')
+                  ->first();
+        }])->get(['id', 'title']);
 
         return view('posts.index', ['posts' => $posts]);
     }
