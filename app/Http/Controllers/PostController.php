@@ -24,7 +24,7 @@ class PostController extends Controller
                   ->first();
         }])->select(['id', 'title'])->paginate(15);
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('dashboard.posts.index', ['posts' => $posts]);
     }
 
     /**
