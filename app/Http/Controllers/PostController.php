@@ -22,7 +22,7 @@ class PostController extends Controller
             $query->select(['id', 'post_id', 'file_path'])
                   ->orderBy('display_order')
                   ->first();
-        }])->get(['id', 'title']);
+        }])->select(['id', 'title'])->paginate(15);
 
         return view('posts.index', ['posts' => $posts]);
     }
