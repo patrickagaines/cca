@@ -48,7 +48,11 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post = $this->post
+            ->with('images')
+            ->findOrFail($id);
+
+        dd($post);
     }
 
     /**
