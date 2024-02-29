@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.posts.create');
     }
 
     /**
@@ -52,7 +52,7 @@ class PostController extends Controller
             ->with('images')
             ->findOrFail($id);
 
-        dd($post);
+        return view('dashboard.posts.show', ['post' => $post]);
     }
 
     /**
