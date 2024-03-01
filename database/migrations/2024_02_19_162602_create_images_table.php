@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('post_id');
             $table->string('file_path', 255);
-            $table->unsignedInteger('display_order');
             $table->string('caption', 100)->nullable();
+            $table->unsignedInteger('position');
             $table->timestamps();
 
             $table->foreign('post_id')

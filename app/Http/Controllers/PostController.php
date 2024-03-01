@@ -20,7 +20,7 @@ class PostController extends Controller
     {
         $posts = $this->post->with(['images' => function (Builder $query) {
             $query->select(['id', 'post_id', 'file_path'])
-                  ->orderBy('display_order')
+                  ->orderBy('position')
                   ->first();
         }])->select(['id', 'title'])->paginate(15);
 

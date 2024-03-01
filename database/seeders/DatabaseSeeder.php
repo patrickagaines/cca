@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             for ($i = 1; $i <= $numImages; $i++) {
                 Image::factory()->for($post)
                     ->state([
-                        'display_order' => $i,
+                        'position' => $i,
                         'created_at' => $post->created_at,
                         'updated_at' => fake()->dateTimeBetween($post->created_at)
                     ])

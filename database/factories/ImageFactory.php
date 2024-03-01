@@ -29,7 +29,7 @@ class ImageFactory extends Factory
             'post_id' => null,
             'file_path' => 'storage/' . basename($fileName),
             'caption' => $addCaption ? fake()->sentence() : null,
-            'display_order' => null
+            'position' => null
         ];
     }
 }
