@@ -1,9 +1,6 @@
 'use strict';
-
-const input = document.getElementById('images');
-
-function previewImage() {
-    const files = input.files;
+export function previewImage(fileInput) {
+    const files = fileInput.files;
 
     if (files.length > 0) {
         const imagePreviews = document.getElementById('image_previews');
@@ -77,5 +74,3 @@ function buildPreview(event, imagePreviews) {
 
     return previewElement;
 }
-
-input.addEventListener('change', previewImage);
