@@ -1,17 +1,16 @@
 'use strict';
-export function previewImage(fileInput) {
+
+export function previewImage(fileInput, previewContainer) {
     const files = fileInput.files;
 
     if (files.length > 0) {
-        const imagePreviews = document.getElementById('image_previews');
-
         Array.from(files).forEach((file) => {
             if (file instanceof Blob) {
                 const fileReader = new FileReader();
 
                 fileReader.onload = function (event) {
-                    const previewElement = buildPreview(event, imagePreviews);
-                    imagePreviews.appendChild(previewElement);
+                    const previewElement = buildPreview(event, previewContainer);
+                    previewContainer.appendChild(previewElement);
                 }
 
                 fileReader.readAsDataURL(file);
@@ -20,11 +19,12 @@ export function previewImage(fileInput) {
     }
 }
 
-function buildPreview(event, imagePreviews) {
-    const previewPosition = imagePreviews.childElementCount + 1;
+function buildPreview(event, previewContainer) {
+    const previewPosition = previewContainer.childElementCount + 1;
 
     const previewElement = document.createElement('div');
     previewElement.classList.add('card');
+    previewElement.setAttribute('draggable', 'true');
 
     const removePreviewElement = document.createElement('button');
     removePreviewElement.setAttribute('type', 'button');
@@ -33,10 +33,10 @@ function buildPreview(event, imagePreviews) {
     removePreviewElement.innerText = 'x';
 
     const imageSectionElement = document.createElement('div');
-    imageSectionElement.classList.add('section');
+    imageSectionElement.classList.add('section', 'image_section');
 
     const inputsSectionElement = document.createElement('div');
-    inputsSectionElement.classList.add('section')
+    inputsSectionElement.classList.add('section', 'inputs_section')
 
     const imageElement = document.createElement('img');
     imageElement.setAttribute('alt', `Image upload preview #${previewPosition}`);
@@ -60,6 +60,7 @@ function buildPreview(event, imagePreviews) {
     displayOrderInputElement.setAttribute('id', `position_${previewPosition}`);
     displayOrderInputElement.setAttribute('name', 'position')
     displayOrderInputElement.value = previewPosition.toString();
+    displayOrderInputElement.readOnly = true;
 
     imageSectionElement.appendChild(imageElement);
 

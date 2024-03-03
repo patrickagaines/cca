@@ -8,12 +8,25 @@
         bg-white
         rounded-sm
         shadow
+        cursor-move
         pb-2
         px-2
         pt-8
         relative
         sm:flex
         items-center;
+    }
+
+    #image_previews > .card.over {
+        @apply
+        border-2
+        border-dashed
+        border-gray-400;
+    }
+
+    #image_previews > .card.over > * {
+        @apply
+        pointer-events-none;
     }
 
     #image_previews > .card > button.remove_preview {
@@ -48,21 +61,21 @@
         p-2;
     }
 
-    #image_previews > .card > .section:nth-child(2) {
+    #image_previews > .card > .image_section {
         @apply
         sm:w-1/3
         md:w-1/4
         lg:w-1/5;
     }
 
-    #image_previews > .card > .section:nth-child(3) {
+    #image_previews > .card > .inputs_section {
         @apply
         sm:w-2/3
         md:w-3/4
         lg:w-4/5;
     }
 
-    #image_previews > .card > .section > img {
+    #image_previews > .card > .image_section > img {
         @apply
         aspect-square
         border
@@ -71,7 +84,7 @@
         object-cover;
     }
 
-    #image_previews > .card > .section > label {
+    #image_previews > .card > .inputs_section > label {
         @apply
         block
         font-medium
@@ -79,7 +92,7 @@
         text-gray-700;
     }
 
-    #image_previews > .card > .section > textarea {
+    #image_previews > .card > .inputs_section > textarea {
         @apply
         bg-gray-100
         border-gray-300
@@ -91,7 +104,7 @@
         focus:ring-indigo-500;
     }
 
-    #image_previews > .card > .section > input[type="number"] {
+    #image_previews > .card > .inputs_section > input[type="number"] {
         @apply
         bg-gray-100
         border-gray-300
