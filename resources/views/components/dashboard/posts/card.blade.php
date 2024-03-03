@@ -7,7 +7,7 @@
     <div class="mb-4 h-16">
         <h3>{{ $post->title }}</h3>
     </div>
-    <x-dashboard.link-button :href="route('posts.show', $post)">
+    <x-dashboard.link-button :href="route('dashboard.posts.show', $post)">
         View Details
     </x-dashboard.link-button>
 </div>

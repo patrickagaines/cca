@@ -7,7 +7,7 @@
 
     <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <div class="mb-4 flex justify-end">
-            <x-dashboard.link-button :href="route('posts.create')" class="w-36">
+            <x-dashboard.link-button :href="route('dashboard.posts.create')" class="w-36">
                 Create New +
             </x-dashboard.link-button>
         </div>
