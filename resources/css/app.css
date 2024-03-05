@@ -17,16 +17,16 @@
         items-center;
     }
 
+    #image_previews >.card.disable-child-pointers > * {
+        @apply
+        pointer-events-none;
+    }
+
     #image_previews > .card.over {
         @apply
         border-2
         border-dashed
         border-gray-400;
-    }
-
-    #image_previews > .card.over > * {
-        @apply
-        pointer-events-none;
     }
 
     #image_previews > .card > button.remove_preview {

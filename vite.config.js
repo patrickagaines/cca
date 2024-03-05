@@ -8,7 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/site.css',
                 'resources/js/app.js',
-                'resources/js/posts/index.js',
+                'resources/js/dashboard/posts/form.js',
             ],
             refresh: true,
         }),
