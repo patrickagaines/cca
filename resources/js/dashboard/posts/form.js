@@ -1,10 +1,14 @@
-import { previewImage } from "./preview.js";
+import { previewImage, removePreview } from "./preview.js";
 
 const fileInput = document.getElementById('image_upload');
 const previewContainer = document.getElementById('image_previews');
-const previewObserver = new MutationObserver(initializeDragHandlers);
+const previewObserver = new MutationObserver(() => {
+   initializeDragHandlers();
+   initializeRemoveButtons();
+});
 
-let previewItems;
+let previews;
+let removePreviewButtons;
 let currentDragElement;
 
 fileInput.addEventListener('change', () => previewImage(fileInput, previewContainer));
@@ -12,9 +16,9 @@ previewObserver.observe(previewContainer, { childList: true });
 
 initializeDragHandlers();
 function initializeDragHandlers() {
-    previewItems = document.querySelectorAll('.card');
+    previews = document.querySelectorAll('.card');
 
-    previewItems.forEach((item) => {
+    previews.forEach((item) => {
         item.addEventListener('dragstart', handleDragStart);
         item.addEventListener('dragend', handleDragEnd);
         item.addEventListener('dragover', handleDragOver);
@@ -24,8 +28,19 @@ function initializeDragHandlers() {
     });
 }
 
+function initializeRemoveButtons() {
+    removePreviewButtons = document.querySelectorAll('.remove_preview');
+
+    removePreviewButtons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            removePreview(e);
+            updatePreviewPositions();
+        });
+    });
+}
+
 function handleDragStart(e) {
-    previewItems.forEach((item) => {
+    previews.forEach((item) => {
         item.classList.add('disable-child-pointers');
     })
 
@@ -35,7 +50,7 @@ function handleDragStart(e) {
 }
 
 function handleDragEnd(e) {
-    previewItems.forEach((item) => {
+    previews.forEach((item) => {
         item.classList.remove('disable-child-pointers', 'over');
     })
 
@@ -65,5 +80,15 @@ function handleDrop(e) {
         temp.replaceWith(currentDragElement);
     }
 
+    updatePreviewPositions();
+
     return false;
+}
+
+function updatePreviewPositions() {
+    let positionInputs = document.querySelectorAll('input[name="position[]"]');
+
+    positionInputs.forEach((input, index) => {
+        input.value = index + 1;
+    });
 }
