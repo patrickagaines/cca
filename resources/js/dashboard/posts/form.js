@@ -5,16 +5,19 @@ const previewContainer = document.getElementById('image_previews');
 const previewObserver = new MutationObserver(() => {
    initializeDragHandlers();
    initializeRemoveButtons();
+   initalizeArrowButtons();
 });
 
 let previews;
-let removePreviewButtons;
 let currentDragElement;
 
 fileInput.addEventListener('change', () => previewImage(fileInput, previewContainer));
 previewObserver.observe(previewContainer, { childList: true });
 
 initializeDragHandlers();
+initializeRemoveButtons();
+initalizeArrowButtons();
+
 function initializeDragHandlers() {
     previews = document.querySelectorAll('.card');
 
@@ -29,13 +32,27 @@ function initializeDragHandlers() {
 }
 
 function initializeRemoveButtons() {
-    removePreviewButtons = document.querySelectorAll('.remove_preview');
+    let removePreviewButtons = document.querySelectorAll('.remove_preview');
 
     removePreviewButtons.forEach((button) => {
         button.addEventListener('click', (e) => {
             removePreview(e);
             updatePreviewPositions();
         });
+    });
+}
+
+function initalizeArrowButtons() {
+    let arrowUpButtons = document.querySelectorAll('.arrow.up');
+    arrowUpButtons.forEach((button, index) => {
+       button.disabled = index === 0;
+       button.addEventListener('click', handleArrowUp);
+    });
+
+    let arrowDownButtons = document.querySelectorAll('.arrow.down');
+    arrowDownButtons.forEach((button, index) => {
+       button.disabled = index === arrowDownButtons.length - 1;
+        button.addEventListener('click', handleArrowDown);
     });
 }
 
@@ -83,6 +100,28 @@ function handleDrop(e) {
     updatePreviewPositions();
 
     return false;
+}
+
+function handleArrowUp(e) {
+    const currentPreview = e.target.closest('.card');
+    const targetPreview = currentPreview.previousSibling;
+    const temp = new Text("");
+    targetPreview.before(temp);
+    currentPreview.replaceWith(targetPreview);
+    temp.replaceWith(currentPreview);
+
+    updatePreviewPositions();
+}
+
+function handleArrowDown(e) {
+    const currentPreview = e.target.closest('.card');
+    const targetPreview = currentPreview.nextSibling;
+    const temp = new Text("");
+    targetPreview.before(temp)
+    currentPreview.replaceWith(targetPreview);
+    temp.replaceWith(currentPreview);
+
+    updatePreviewPositions();
 }
 
 function updatePreviewPositions() {

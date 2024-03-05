@@ -71,6 +71,16 @@ function buildPreview(e, previewContainer, fileName) {
     displayOrderInputElement.value = previewPosition.toString();
     displayOrderInputElement.readOnly = true;
 
+    const moveUpButtonElement = document.createElement('button');
+    moveUpButtonElement.setAttribute('type', 'button');
+    moveUpButtonElement.classList.add('arrow', 'up');
+    moveUpButtonElement.innerHTML = '&#8593;';
+
+    const moveDownButtonElement = document.createElement('button');
+    moveDownButtonElement.setAttribute('type', 'button');
+    moveDownButtonElement.classList.add('arrow', 'down');
+    moveDownButtonElement.innerHTML = '&#8595;';
+
     imageSectionElement.appendChild(imageElement);
 
     inputsSectionElement.appendChild(imageNameInputElement);
@@ -78,6 +88,8 @@ function buildPreview(e, previewContainer, fileName) {
     inputsSectionElement.appendChild(captionTextAreaElement);
     inputsSectionElement.appendChild(displayOrderLabelElement);
     inputsSectionElement.appendChild(displayOrderInputElement);
+    inputsSectionElement.appendChild(moveUpButtonElement);
+    inputsSectionElement.appendChild(moveDownButtonElement);
 
     previewElement.appendChild(removePreviewElement);
     previewElement.appendChild(imageSectionElement);
