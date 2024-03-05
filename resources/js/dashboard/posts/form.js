@@ -7,11 +7,15 @@ const previewObserver = new MutationObserver(() => {
    initializeRemoveButtons();
    initalizeArrowButtons();
 });
+const imageDataTransfer = new DataTransfer();
 
 let previews;
 let currentDragElement;
 
-fileInput.addEventListener('change', () => previewImage(fileInput, previewContainer));
+fileInput.addEventListener('change', () => {
+    previewImage(fileInput, previewContainer, imageDataTransfer);
+});
+
 previewObserver.observe(previewContainer, { childList: true });
 
 initializeDragHandlers();

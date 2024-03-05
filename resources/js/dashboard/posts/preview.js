@@ -1,11 +1,13 @@
 'use strict';
 
-export function previewImage(fileInput, previewContainer) {
+export function previewImage(fileInput, previewContainer, imageDataTransfer) {
     const files = fileInput.files;
 
     if (files.length > 0) {
         Array.from(files).forEach((file) => {
             if (file instanceof Blob) {
+                imageDataTransfer.items.add(file);
+
                 const fileReader = new FileReader();
 
                 fileReader.onload = function (e) {
@@ -16,6 +18,8 @@ export function previewImage(fileInput, previewContainer) {
                 fileReader.readAsDataURL(file);
             }
         });
+
+        fileInput.files = imageDataTransfer.files;
     }
 }
 
