@@ -107,7 +107,7 @@ function handleDrop(e) {
 
 function handleRemovePreview(e) {
     const previewElement = e.target.parentElement;
-    const fileToRemove = previewElement.querySelector('input[name="image_name[]"]').value;
+    const fileToRemove = previewElement.querySelector('input[name="image_names[]"]').value;
 
     Array.from(imageDataTransfer.files).forEach((file, index) => {
         if (file.name === fileToRemove) {
@@ -144,7 +144,7 @@ function handleArrowDown(e) {
 }
 
 function updatePreviewPositions() {
-    let positionInputs = document.querySelectorAll('input[name="position[]"]');
+    let positionInputs = document.querySelectorAll('input[name="positions[]"]');
 
     positionInputs.forEach((input, index) => {
         input.value = index + 1;

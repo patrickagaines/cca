@@ -48,26 +48,26 @@ function buildPreview(e, previewContainer, fileName) {
 
     const imageNameInputElement = document.createElement('input');
     imageNameInputElement.setAttribute('type', 'hidden');
-    imageNameInputElement.setAttribute('name', 'image_name[]');
+    imageNameInputElement.setAttribute('name', 'image_names[]');
     imageNameInputElement.value = fileName;
 
     const captionLabelElement = document.createElement('label');
-    captionLabelElement.setAttribute('for', `caption[]`)
+    captionLabelElement.setAttribute('for', `captions[]`)
     captionLabelElement.innerText = 'Caption';
 
     const captionTextAreaElement = document.createElement('textarea');
     captionTextAreaElement.setAttribute('id', `caption_${previewPosition}`);
-    captionTextAreaElement.setAttribute('name', `caption[]`);
+    captionTextAreaElement.setAttribute('name', `captions[]`);
     captionTextAreaElement.style.resize = 'none';
 
     const displayOrderLabelElement = document.createElement('label');
-    displayOrderLabelElement.setAttribute('for', `position[]`);
+    displayOrderLabelElement.setAttribute('for', `positions[]`);
     displayOrderLabelElement.innerText = 'Position';
 
     const displayOrderInputElement = document.createElement('input');
     displayOrderInputElement.setAttribute('type', 'number');
     displayOrderInputElement.setAttribute('id', `position_${previewPosition}`);
-    displayOrderInputElement.setAttribute('name', 'position[]')
+    displayOrderInputElement.setAttribute('name', 'positions[]')
     displayOrderInputElement.value = previewPosition.toString();
     displayOrderInputElement.readOnly = true;
 
