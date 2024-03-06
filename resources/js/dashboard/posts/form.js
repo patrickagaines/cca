@@ -1,4 +1,6 @@
-import { previewImage, removePreview } from "./preview.js";
+'use strict';
+
+import { previewImage } from "./preview.js";
 
 const fileInput = document.getElementById('image_upload');
 const previewContainer = document.getElementById('image_previews');
@@ -39,10 +41,7 @@ function initializeRemoveButtons() {
     let removePreviewButtons = document.querySelectorAll('.remove_preview');
 
     removePreviewButtons.forEach((button) => {
-        button.addEventListener('click', (e) => {
-            removePreview(e);
-            updatePreviewPositions();
-        });
+        button.addEventListener('click', handleRemovePreview);
     });
 }
 
@@ -104,6 +103,22 @@ function handleDrop(e) {
     updatePreviewPositions();
 
     return false;
+}
+
+function handleRemovePreview(e) {
+    const previewElement = e.target.parentElement;
+    const fileToRemove = previewElement.querySelector('input[name="image_name[]"]').value;
+
+    Array.from(imageDataTransfer.files).forEach((file, index) => {
+        if (file.name === fileToRemove) {
+            imageDataTransfer.items.remove(index);
+
+            fileInput.files = imageDataTransfer.files;
+        }
+    });
+
+    previewElement.remove();
+    updatePreviewPositions();
 }
 
 function handleArrowUp(e) {

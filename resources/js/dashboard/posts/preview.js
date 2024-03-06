@@ -23,10 +23,6 @@ export function previewImage(fileInput, previewContainer, imageDataTransfer) {
     }
 }
 
-export function removePreview(e) {
-    e.target.parentElement.remove();
-}
-
 function buildPreview(e, previewContainer, fileName) {
     const previewPosition = previewContainer.childElementCount + 1;
 
