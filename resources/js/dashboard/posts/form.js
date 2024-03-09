@@ -123,7 +123,7 @@ function handleRemovePreview(e) {
 
 function handleArrowUp(e) {
     const currentPreview = e.target.closest('.card');
-    const targetPreview = currentPreview.previousSibling;
+    const targetPreview = currentPreview.previousElementSibling;
     const temp = new Text("");
     targetPreview.before(temp);
     currentPreview.replaceWith(targetPreview);
@@ -134,7 +134,7 @@ function handleArrowUp(e) {
 
 function handleArrowDown(e) {
     const currentPreview = e.target.closest('.card');
-    const targetPreview = currentPreview.nextSibling;
+    const targetPreview = currentPreview.nextElementSibling;
     const temp = new Text("");
     targetPreview.before(temp)
     currentPreview.replaceWith(targetPreview);

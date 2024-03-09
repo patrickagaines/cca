@@ -1,9 +1,16 @@
+@props(['post' => null])
+
 <form
-    action="{{ route('dashboard.posts.store') }}"
+    action="{{ isset($post) ?
+        route('dashboard.posts.update', ['post' => $post]) :
+        route('dashboard.posts.store') }}"
     method="POST"
     enctype="multipart/form-data"
 >
     @csrf
+    @isset($post)
+        @method('PUT')
+    @endisset
     <div class="mb-4 flex justify-end">
         <x-primary-button>
             Save
@@ -11,7 +18,14 @@
     </div>
     <div class="mb-6">
         <x-input-label for="title">Title*</x-input-label>
-        <x-text-input id="title" name="title" class="w-full" maxlength="100"/>
+        <x-text-input
+            id="title"
+            name="title"
+            class="w-full"
+            required
+            maxlength="100"
+            value="{{ $post->title ?? old('title') }}"
+        />
         <x-input-error :messages="$errors->get('title')"/>
     </div>
     <div class="mb-6 flex flex-wrap justify-center">
@@ -27,5 +41,28 @@
         </div>
         @enderror
     </div>
-    <div id="image_previews" class="grid grid-cols-1 gap-4"></div>
+    <div id="image_previews" class="grid grid-cols-1 gap-4">
+        @isset($post)
+            @foreach($post->images as $image)
+                <div class="card" draggable="true">
+                    <button type="button" class="remove_preview" value="{{ $image->position }}">x</button>
+                    <div class="section image_section">
+                        <img alt="Image preview #{{ $image->position }}" src="{{ asset($image->file_path) }}">
+                    </div>
+                    <div class="section inputs_section">
+                        <input type="hidden" name="image_names[]" value="{{ $image->file_name }}">
+                        <label for="caption_{{ $image->position }}">Caption</label>
+                        <textarea
+                            id="caption_{{ $image->position }}"
+                            name="captions[]"
+                        >{{ $image->caption }}</textarea>
+                        <label for="position_{{ $image->position }}">Position</label>
+                        <input type="number" id="position_{{ $image->position }}" name="positions[]" value="{{ $image->position }}" readonly>
+                        <button type="button" class="arrow up">&#8593;</button>
+                        <button type="button" class="arrow down">&#8595;</button>
+                    </div>
+                </div>
+            @endforeach
+        @endisset
+    </div>
 </form>

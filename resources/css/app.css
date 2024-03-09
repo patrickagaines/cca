@@ -99,6 +99,7 @@
         rounded-md
         box-border
         mb-2
+        resize-none
         w-full
         focus:border-indigo-500
         focus:ring-indigo-500;

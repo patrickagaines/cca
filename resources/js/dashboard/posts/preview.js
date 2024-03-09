@@ -43,7 +43,7 @@ function buildPreview(e, previewContainer, fileName) {
     inputsSectionElement.classList.add('section', 'inputs_section')
 
     const imageElement = document.createElement('img');
-    imageElement.setAttribute('alt', `Image upload preview #${previewPosition}`);
+    imageElement.setAttribute('alt', `Image preview #${previewPosition}`);
     imageElement.setAttribute('src', e.target.result.toString());
 
     const imageNameInputElement = document.createElement('input');
@@ -52,16 +52,15 @@ function buildPreview(e, previewContainer, fileName) {
     imageNameInputElement.value = fileName;
 
     const captionLabelElement = document.createElement('label');
-    captionLabelElement.setAttribute('for', `captions[]`)
+    captionLabelElement.setAttribute('for', `caption_${previewPosition}`)
     captionLabelElement.innerText = 'Caption';
 
     const captionTextAreaElement = document.createElement('textarea');
     captionTextAreaElement.setAttribute('id', `caption_${previewPosition}`);
     captionTextAreaElement.setAttribute('name', `captions[]`);
-    captionTextAreaElement.style.resize = 'none';
 
     const displayOrderLabelElement = document.createElement('label');
-    displayOrderLabelElement.setAttribute('for', `positions[]`);
+    displayOrderLabelElement.setAttribute('for', `position_${previewPosition}`);
     displayOrderLabelElement.innerText = 'Position';
 
     const displayOrderInputElement = document.createElement('input');

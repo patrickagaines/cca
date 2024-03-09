@@ -90,7 +90,11 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = $this->post
+            ->with('images')
+            ->findOrFail($id);
+
+        return view('dashboard.posts.edit', ['post' => $post]);
     }
 
     /**
