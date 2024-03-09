@@ -50,7 +50,7 @@
                         <img alt="Image preview #{{ $image->position }}" src="{{ asset($image->file_path) }}">
                     </div>
                     <div class="section inputs_section">
-                        <input type="hidden" name="image_names[]" value="{{ $image->file_name }}">
+                        <input type="hidden" name="image_names[]" value="{{ $image->original_file_name }}">
                         <label for="caption_{{ $image->position }}">Caption</label>
                         <textarea
                             id="caption_{{ $image->position }}"
