@@ -28,7 +28,7 @@ class PostController extends Controller
             $query->select(['id', 'post_id', 'file_path'])
                   ->orderBy('position')
                   ->first();
-        }])->select(['id', 'title'])->paginate(15);
+        }])->select(['id', 'title'])->orderBy('created_at', 'desc')->paginate(15);
 
         return view('dashboard.posts.index', ['posts' => $posts]);
     }
@@ -60,11 +60,11 @@ class PostController extends Controller
             if ($image instanceof UploadedFile) {
                 if ($filePath = $image->storePublicly('images', ['disk' => 'public'])) {
                     $this->image->create([
-                        'post_id'   => $post->id,
+                        'post_id'            => $post->id,
                         'original_file_name' => basename($filePath),
-                        'file_path' => "storage/$filePath",
-                        'caption'   => $validated['captions'][$index],
-                        'position'  => $validated['positions'][$index]
+                        'file_path'          => "storage/$filePath",
+                        'caption'            => $validated['captions'][$index],
+                        'position'           => $validated['positions'][$index]
                     ]);
                 }
             }
