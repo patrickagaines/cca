@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Image;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,19 +18,21 @@ class ImageFactory extends Factory
      */
     public function definition(): array
     {
-        $fileName = $this->faker->image(storage_path('app/public'));
+        $filePath = $this->faker->image(storage_path('app/public/images'));
+        $fileName = basename($filePath);
 
         try {
             $addCaption = random_int(0, 1);
-        } catch (\Exception) {
+        } catch (Exception) {
             $addCaption = 0;
         }
 
         return [
-            'post_id' => null,
-            'file_path' => 'storage/' . basename($fileName),
-            'caption' => $addCaption ? fake()->sentence() : null,
-            'position' => null
+            'post_id'   => null,
+            'file_name' => $fileName,
+            'file_path' => "storage/images/$fileName",
+            'caption'   => $addCaption ? fake()->sentence() : null,
+            'position'  => null
         ];
     }
 }

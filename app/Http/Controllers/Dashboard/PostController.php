@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\StorePostRequest;
+use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\UploadedFile;
 
 class PostController extends Controller
 {
-    public function __construct(private Post $post)
+    public function __construct(
+        private readonly Post  $post,
+        private readonly Image $image
+    )
     {
     }
 
@@ -42,7 +46,31 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        dd($request->validated());
+        $validated = $request->validated();
+
+        $orderedImageKeys = array_flip($validated['image_names']);
+
+        usort($validated['images'], function ($a, $b) use ($orderedImageKeys) {
+            return $orderedImageKeys[$a->getClientOriginalName()] <=> $orderedImageKeys[$b->getClientOriginalName()];
+        });
+
+        $post = $this->post->create(['title' => $validated['title']]);
+
+        foreach ($validated['images'] as $index => $image) {
+            if ($image instanceof UploadedFile) {
+                if ($filePath = $image->storePublicly('images', ['disk' => 'public'])) {
+                    $this->image->create([
+                        'post_id'   => $post->id,
+                        'file_name' => basename($filePath),
+                        'file_path' => "storage/$filePath",
+                        'caption'   => $validated['captions'][$index],
+                        'position'  => $validated['positions'][$index]
+                    ]);
+                }
+            }
+        }
+
+        return view('dashboard.posts.show', ['post' => $post]);
     }
 
     /**
