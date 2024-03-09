@@ -5,7 +5,7 @@ namespace App\Http\Requests\Dashboard;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class PostRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

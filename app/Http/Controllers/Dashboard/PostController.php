@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\StorePostRequest;
+use App\Http\Requests\Dashboard\PostRequest;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -44,7 +44,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store(PostRequest $request)
     {
         $validated = $request->validated();
 
@@ -100,9 +100,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
-        //
+        dd($request->validated());
     }
 
     /**
