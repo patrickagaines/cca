@@ -10,9 +10,16 @@
             <x-dashboard.link-button :href="route('dashboard.posts.edit', $post)">
                 Edit
             </x-dashboard.link-button>
-            <x-danger-button>
-                Delete
-            </x-danger-button>
+            <form
+                action="{{ route('dashboard.posts.destroy', ['post' => $post]) }}"
+                method="POST"
+            >
+                @csrf
+                @method('DELETE')
+                <x-danger-button>
+                    Delete
+                </x-danger-button>
+            </form>
         </div>
     </div>
 

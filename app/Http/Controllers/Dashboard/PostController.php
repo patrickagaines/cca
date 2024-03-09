@@ -7,7 +7,6 @@ use App\Http\Requests\Dashboard\PostRequest;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
 class PostController extends Controller
@@ -110,6 +109,6 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd($id);
     }
 }
