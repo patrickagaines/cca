@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\PostRequest;
+use App\Jobs\OptimizeImage;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Contracts\Database\Eloquent\Builder;
@@ -58,13 +59,15 @@ class PostController extends Controller
         foreach ($validated['images'] as $index => $image) {
             if ($image instanceof UploadedFile) {
                 if ($filePath = $image->storePublicly('images', ['disk' => 'public'])) {
-                    $this->image->create([
+                    $imageModel = $this->image->create([
                         'post_id'            => $post->id,
                         'original_file_name' => basename($filePath),
                         'file_path'          => "storage/$filePath",
                         'caption'            => $validated['captions'][$index],
                         'position'           => $validated['positions'][$index]
                     ]);
+
+                    OptimizeImage::dispatch($imageModel);
                 }
             }
         }
