@@ -28,7 +28,7 @@ class OptimizeImage implements ShouldQueue
      */
     public function handle(): void
     {
-        $imageFileName = $this->image->original_file_name;
+        $imageFileName = $this->image->file_name;
         $imagePath = storage_path("app/public/images/$imageFileName");
 
         $interventionImage = InterventionImage::read($imagePath);

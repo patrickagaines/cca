@@ -12,7 +12,7 @@ class Image extends Model
 
     protected $fillable = [
         'post_id',
-        'original_file_name',
+        'file_name',
         'file_path',
         'caption',
         'position'

@@ -29,7 +29,7 @@ class ImageFactory extends Factory
 
         return [
             'post_id'   => null,
-            'original_file_name' => $fileName,
+            'file_name' => $fileName,
             'file_path' => "storage/images/$fileName",
             'caption'   => $addCaption ? fake()->sentence() : null,
             'position'  => null

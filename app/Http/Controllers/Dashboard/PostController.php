@@ -61,7 +61,7 @@ class PostController extends Controller
                 if ($filePath = $image->storePublicly('images', ['disk' => 'public'])) {
                     $imageModel = $this->image->create([
                         'post_id'            => $post->id,
-                        'original_file_name' => basename($filePath),
+                        'file_name' => basename($filePath),
                         'file_path'          => "storage/$filePath",
                         'caption'            => $validated['captions'][$index],
                         'position'           => $validated['positions'][$index]
