@@ -8,7 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image as InterventionImage;
 
 class OptimizeImage implements ShouldQueue
@@ -18,7 +17,7 @@ class OptimizeImage implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private Image $image)
+    public function __construct(private readonly Image $image)
     {
         //
     }
@@ -28,27 +27,30 @@ class OptimizeImage implements ShouldQueue
      */
     public function handle(): void
     {
-        $imageFileName = $this->image->file_name;
-        $imagePath = storage_path("app/public/images/$imageFileName");
+        $imagesDirectory = storage_path('app/public/images');
+        $fileName        = $this->image->file_name;
+        $filePath        = "$imagesDirectory/$fileName";
 
-        $interventionImage = InterventionImage::read($imagePath);
-        $size = $interventionImage->size();
+        $interventionImage = InterventionImage::read($filePath);
+        $size              = $interventionImage->size();
 
-        if ($size->isLandscape()) {
-            $interventionImage->scaleDown(height: 1600);
+        if ($size->isPortrait()) {
+            $interventionImage->scaleDown(height: 1920);
             $interventionImage->save();
 
-            $croppedImage = $interventionImage->resizeCanvas(
-                width: $interventionImage->height(),
-                height: $interventionImage->height()
-            );
+            $interventionImage->scaleDown(width: 600);
+        } else {
+            $interventionImage->scaleDown(width: 1920);
+            $interventionImage->save();
 
-            $croppedImageFileName = "$imageFileName-1x1";
-
-            $croppedImage->save(storage_path("app/public/images/$croppedImageFileName"));
-
-            $this->image->file_path = "storage/images/$croppedImageFileName";
-            $this->image->save();
+            $interventionImage->scaleDown(height: 600);
         }
+
+        $interventionImage->resizeCanvas(width: 600, height: 600);
+        $thumbnailFileName = substr_replace($fileName, '-600x600', strpos($fileName, '.'), 0);
+        $interventionImage->save("$imagesDirectory/$thumbnailFileName");
+
+        $this->image->thumbnail_path = "storage/images/$thumbnailFileName";
+        $this->image->save();
     }
 }

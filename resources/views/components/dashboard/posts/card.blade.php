@@ -4,7 +4,7 @@
     <div class="mb-4">
         <img
             alt=""
-            src="{{ asset($post->images()->first()->thumbnail_path) ?? asset($post->images()->first()->file_path) }}"
+            src="{{ asset($post->images()->first()->thumbnail_path ?? $post->images()->first()->file_path)  }}"
             class="object-cover aspect-square"
         >
     </div>
