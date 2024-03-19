@@ -24,4 +24,11 @@ class PostRequest extends FormRequest
             'images.*.position' => 'required|integer|min:1'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'images.required' => 'Your post must include at least one image'
+        ];
+    }
 }

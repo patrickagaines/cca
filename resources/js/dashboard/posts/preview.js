@@ -1,16 +1,17 @@
 'use strict';
 
-export function previewImage(fileInput, previewContainer, imageDataTransfer) {
+export function previewImage(fileInput, previewContainer, imageDataTransfer, maxUploadCount) {
     const files = fileInput.files;
 
     if (files.length > 0) {
         for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
 
-            if (fileIndex === 20) {
+            if (imageDataTransfer.items.length === maxUploadCount) {
                 setTimeout(
-                    () => window.alert('You may only upload 20 files at a time'),
-                    300
+                    () => window.alert(`You may only upload ${maxUploadCount} files at a time`),
+                    350
                 );
+
                 break;
             }
 

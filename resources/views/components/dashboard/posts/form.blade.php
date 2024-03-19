@@ -1,6 +1,7 @@
 @props(['post' => null])
 
 <form
+    id="posts_form"
     action="{{ isset($post) ?
         route('dashboard.posts.update', ['post' => $post]) :
         route('dashboard.posts.store') }}"
@@ -29,15 +30,13 @@
         <x-input-error :messages="$errors->get('title')"/>
     </div>
     <div class="mb-6 flex flex-wrap justify-center">
-        <label
-            for="image_upload"
-            class="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50">
+        <label for="image_upload">
             Upload Images
         </label>
         <input type="file" accept=".jpg, .jpeg, .png" multiple id="image_upload" name="image_files[]" class="hidden">
-        @error('image_names')
+        @error('images')
         <div class="mt-2 flex basis-full justify-center">
-            <x-input-error :messages="$errors->get('image_names')"/>
+            <x-input-error :messages="$errors->get('images')"/>
         </div>
         @enderror
     </div>

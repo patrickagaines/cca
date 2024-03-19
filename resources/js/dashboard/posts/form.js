@@ -2,12 +2,15 @@
 
 import { previewImage } from "./preview.js";
 
+const maxUploadCount = 20;
 const fileInput = document.getElementById('image_upload');
+const fileInputLabel = document.querySelector('label[for="image_upload"]');
 const previewContainer = document.getElementById('image_previews');
 const previewObserver = new MutationObserver(() => {
-   initializeDragHandlers();
-   initializeRemoveButtons();
-   initalizeArrowButtons();
+    initializeDragHandlers();
+    initializeRemoveButtons();
+    initalizeArrowButtons();
+    handleMaxUploadCount();
 });
 const imageDataTransfer = new DataTransfer();
 
@@ -15,7 +18,7 @@ let previews;
 let currentDragElement;
 
 fileInput.addEventListener('change', () => {
-    previewImage(fileInput, previewContainer, imageDataTransfer);
+    previewImage(fileInput, previewContainer, imageDataTransfer, maxUploadCount);
 });
 
 previewObserver.observe(previewContainer, { childList: true });
@@ -48,15 +51,23 @@ function initializeRemoveButtons() {
 function initalizeArrowButtons() {
     let arrowUpButtons = document.querySelectorAll('.arrow.up');
     arrowUpButtons.forEach((button, index) => {
-       button.disabled = index === 0;
-       button.addEventListener('click', handleArrowUp);
+        button.disabled = index === 0;
+        button.addEventListener('click', handleArrowUp);
     });
 
     let arrowDownButtons = document.querySelectorAll('.arrow.down');
     arrowDownButtons.forEach((button, index) => {
-       button.disabled = index === arrowDownButtons.length - 1;
+        button.disabled = index === arrowDownButtons.length - 1;
         button.addEventListener('click', handleArrowDown);
     });
+}
+
+function handleMaxUploadCount() {
+    if (imageDataTransfer.files.length === maxUploadCount) {
+        fileInputLabel.classList.add('disabled');
+    } else if (fileInputLabel.classList.contains('disabled')) {
+        fileInputLabel.classList.remove('disabled');
+    }
 }
 
 function handleDragStart(e) {
