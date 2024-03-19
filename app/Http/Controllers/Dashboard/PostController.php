@@ -48,27 +48,23 @@ class PostController extends Controller
     {
         $validated = $request->validated();
 
-        $orderedImageKeys = array_flip($validated['image_names']);
-
-        usort($validated['images'], function ($a, $b) use ($orderedImageKeys) {
-            return $orderedImageKeys[$a->getClientOriginalName()] <=> $orderedImageKeys[$b->getClientOriginalName()];
-        });
-
         $post = $this->post->create(['title' => $validated['title']]);
 
-        foreach ($validated['images'] as $index => $image) {
-            if ($image instanceof UploadedFile) {
-                if ($filePath = $image->storePublicly('images', ['disk' => 'public'])) {
-                    $imageModel = $this->image->create([
-                        'post_id'            => $post->id,
-                        'file_name' => basename($filePath),
-                        'file_path'          => "storage/$filePath",
-                        'caption'            => $validated['captions'][$index],
-                        'position'           => $validated['positions'][$index]
-                    ]);
+        foreach ($validated['images'] as $image) {
 
-                    OptimizeImage::dispatch($imageModel);
-                }
+            $imageFile = $validated['image_files'][$image['file_index']];
+
+            if ($filePath = $imageFile->storePublicly('images', ['disk' => 'public'])) {
+                $imageModel = $this->image->create([
+                    'post_id'   => $post->id,
+                    'file_name' => basename($filePath),
+                    'file_path' => "storage/$filePath",
+                    'caption'   => $image['caption'],
+                    'position'  => $image['position']
+                ]);
+
+                OptimizeImage::dispatch($imageModel);
+
             }
         }
 

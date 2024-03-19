@@ -34,7 +34,7 @@
             class="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50">
             Upload Images
         </label>
-        <input type="file" accept=".jpg, .jpeg, .png" multiple id="image_upload" name="images[]" class="hidden">
+        <input type="file" accept=".jpg, .jpeg, .png" multiple id="image_upload" name="image_files[]" class="hidden">
         @error('image_names')
         <div class="mt-2 flex basis-full justify-center">
             <x-input-error :messages="$errors->get('image_names')"/>

@@ -4,26 +4,37 @@ export function previewImage(fileInput, previewContainer, imageDataTransfer) {
     const files = fileInput.files;
 
     if (files.length > 0) {
-        Array.from(files).forEach((file) => {
+        for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
+
+            if (fileIndex === 20) {
+                setTimeout(
+                    () => window.alert('You may only upload 20 files at a time'),
+                    300
+                );
+                break;
+            }
+
+            let file = files.item(fileIndex);
+
             if (file instanceof Blob) {
                 imageDataTransfer.items.add(file);
 
                 const fileReader = new FileReader();
 
                 fileReader.onload = function (e) {
-                    const previewElement = buildPreview(e, previewContainer, file.name);
+                    const previewElement = buildPreview(e, previewContainer, fileIndex);
                     previewContainer.appendChild(previewElement);
                 }
 
                 fileReader.readAsDataURL(file);
             }
-        });
+        }
 
         fileInput.files = imageDataTransfer.files;
     }
 }
 
-function buildPreview(e, previewContainer, fileName) {
+function buildPreview(e, previewContainer, fileIndex) {
     const previewPosition = previewContainer.childElementCount + 1;
 
     const previewElement = document.createElement('div');
@@ -46,10 +57,10 @@ function buildPreview(e, previewContainer, fileName) {
     imageElement.setAttribute('alt', `Image preview #${previewPosition}`);
     imageElement.setAttribute('src', e.target.result.toString());
 
-    const imageNameInputElement = document.createElement('input');
-    imageNameInputElement.setAttribute('type', 'hidden');
-    imageNameInputElement.setAttribute('name', 'image_names[]');
-    imageNameInputElement.value = fileName;
+    const fileIndexInputElement = document.createElement('input');
+    fileIndexInputElement.setAttribute('type', 'hidden');
+    fileIndexInputElement.setAttribute('name', `images[${previewPosition}][file_index]`);
+    fileIndexInputElement.value = fileIndex;
 
     const captionLabelElement = document.createElement('label');
     captionLabelElement.setAttribute('for', `caption_${previewPosition}`)
@@ -57,7 +68,7 @@ function buildPreview(e, previewContainer, fileName) {
 
     const captionTextAreaElement = document.createElement('textarea');
     captionTextAreaElement.setAttribute('id', `caption_${previewPosition}`);
-    captionTextAreaElement.setAttribute('name', `captions[]`);
+    captionTextAreaElement.setAttribute('name', `images[${previewPosition}][caption]`);
 
     const displayOrderLabelElement = document.createElement('label');
     displayOrderLabelElement.setAttribute('for', `position_${previewPosition}`);
@@ -66,7 +77,7 @@ function buildPreview(e, previewContainer, fileName) {
     const displayOrderInputElement = document.createElement('input');
     displayOrderInputElement.setAttribute('type', 'number');
     displayOrderInputElement.setAttribute('id', `position_${previewPosition}`);
-    displayOrderInputElement.setAttribute('name', 'positions[]')
+    displayOrderInputElement.setAttribute('name', `images[${previewPosition}][position]`);
     displayOrderInputElement.value = previewPosition.toString();
     displayOrderInputElement.readOnly = true;
 
@@ -82,7 +93,7 @@ function buildPreview(e, previewContainer, fileName) {
 
     imageSectionElement.appendChild(imageElement);
 
-    inputsSectionElement.appendChild(imageNameInputElement);
+    inputsSectionElement.appendChild(fileIndexInputElement);
     inputsSectionElement.appendChild(captionLabelElement);
     inputsSectionElement.appendChild(captionTextAreaElement);
     inputsSectionElement.appendChild(displayOrderLabelElement);

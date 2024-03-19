@@ -16,21 +16,12 @@ class PostRequest extends FormRequest
     {
         return [
             'title' => 'required|max:100',
-            'images' => 'array|min:1',
-            'images.*' => 'image|mimes:jpg,jpeg,png',
-            'image_names' => 'required|array|min:1',
-            'image_names.*' => 'string',
-            'captions' => 'array',
-            'captions.*' => 'string|max:100|nullable',
-            'positions' => 'array|min:1',
-            'positions.*' => 'integer|min:1'
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'image_names.required' => 'Your post must include at least one image.'
+            'image_files' => 'required|array|min:1',
+            'image_files.*' => 'image|mimes:jpg,jpeg,png',
+            'images' => 'required|array|min:1',
+            'images.*.file_index' => 'required|integer',
+            'images.*.caption' => 'string|max:100|nullable',
+            'images.*.position' => 'required|integer|min:1'
         ];
     }
 }
