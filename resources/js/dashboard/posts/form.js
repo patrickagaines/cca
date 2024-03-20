@@ -3,6 +3,7 @@
 import { previewImage } from "./preview.js";
 
 const maxUploadCount = 20;
+const form = document.getElementById('posts_form');
 const fileInput = document.getElementById('image_upload');
 const fileInputLabel = document.querySelector('label[for="image_upload"]');
 const previewContainer = document.getElementById('image_previews');
@@ -118,15 +119,26 @@ function handleDrop(e) {
 
 function handleRemovePreview(e) {
     const previewElement = e.target.parentElement;
+    const idInput = previewElement.querySelector('input[name^="images"][name$="[id]"]');
     const fileIndexInput = previewElement.querySelector('input[name^="images"][name$="[file_index]"]');
 
-    if (fileIndexInput) {
+    if (idInput) {
+        markImageForDeletion(idInput.value);
+    } else if (fileIndexInput) {
         imageDataTransfer.items.remove(fileIndexInput.value);
         fileInput.files = imageDataTransfer.files;
     }
 
     previewElement.remove();
     updatePreviewPositions();
+}
+
+function markImageForDeletion(imageId) {
+    const deletedImageInput = document.createElement('input');
+    deletedImageInput.setAttribute('type', 'hidden');
+    deletedImageInput.setAttribute('name', 'deleted_images[]');
+    deletedImageInput.value = imageId;
+    form.appendChild(deletedImageInput);
 }
 
 function handleArrowUp(e) {

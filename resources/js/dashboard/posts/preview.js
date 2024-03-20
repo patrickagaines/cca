@@ -36,6 +36,7 @@ export function previewImage(fileInput, previewContainer, imageDataTransfer, max
 }
 
 function buildPreview(e, previewContainer, fileIndex) {
+    const uniqueIndex = Date.now();
     const previewPosition = previewContainer.childElementCount + 1;
 
     const previewElement = document.createElement('div');
@@ -45,7 +46,7 @@ function buildPreview(e, previewContainer, fileIndex) {
     const removePreviewElement = document.createElement('button');
     removePreviewElement.setAttribute('type', 'button');
     removePreviewElement.classList.add('remove_preview');
-    removePreviewElement.value = previewPosition.toString();
+    removePreviewElement.value = uniqueIndex.toString();
     removePreviewElement.innerText = 'x';
 
     const imageSectionElement = document.createElement('div');
@@ -55,30 +56,30 @@ function buildPreview(e, previewContainer, fileIndex) {
     inputsSectionElement.classList.add('section', 'inputs_section')
 
     const imageElement = document.createElement('img');
-    imageElement.setAttribute('alt', `Image preview #${previewPosition}`);
+    imageElement.setAttribute('alt', `Image Upload Preview`);
     imageElement.setAttribute('src', e.target.result.toString());
 
     const fileIndexInputElement = document.createElement('input');
     fileIndexInputElement.setAttribute('type', 'hidden');
-    fileIndexInputElement.setAttribute('name', `images[${previewPosition}][file_index]`);
+    fileIndexInputElement.setAttribute('name', `images[${uniqueIndex}][file_index]`);
     fileIndexInputElement.value = fileIndex;
 
     const captionLabelElement = document.createElement('label');
-    captionLabelElement.setAttribute('for', `caption_${previewPosition}`)
+    captionLabelElement.setAttribute('for', `caption_${uniqueIndex}`)
     captionLabelElement.innerText = 'Caption';
 
     const captionTextAreaElement = document.createElement('textarea');
-    captionTextAreaElement.setAttribute('id', `caption_${previewPosition}`);
-    captionTextAreaElement.setAttribute('name', `images[${previewPosition}][caption]`);
+    captionTextAreaElement.setAttribute('id', `caption_${uniqueIndex}`);
+    captionTextAreaElement.setAttribute('name', `images[${uniqueIndex}][caption]`);
 
     const displayOrderLabelElement = document.createElement('label');
-    displayOrderLabelElement.setAttribute('for', `position_${previewPosition}`);
+    displayOrderLabelElement.setAttribute('for', `position_${uniqueIndex}`);
     displayOrderLabelElement.innerText = 'Position';
 
     const displayOrderInputElement = document.createElement('input');
     displayOrderInputElement.setAttribute('type', 'number');
-    displayOrderInputElement.setAttribute('id', `position_${previewPosition}`);
-    displayOrderInputElement.setAttribute('name', `images[${previewPosition}][position]`);
+    displayOrderInputElement.setAttribute('id', `position_${uniqueIndex}`);
+    displayOrderInputElement.setAttribute('name', `images[${uniqueIndex}][position]`);
     displayOrderInputElement.value = previewPosition.toString();
     displayOrderInputElement.readOnly = true;
 

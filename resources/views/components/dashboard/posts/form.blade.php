@@ -18,7 +18,10 @@
         </x-primary-button>
     </div>
     <div class="mb-6">
-        <x-input-label for="title">Title*</x-input-label>
+        <x-input-label for="title">
+            Title
+            <span class="text-red-600">*</span>
+        </x-input-label>
         <x-text-input
             id="title"
             name="title"
@@ -44,21 +47,27 @@
         @isset($post)
             @foreach($post->images as $image)
                 <div class="card" draggable="true">
-                    <button type="button" class="remove_preview" value="{{ $image->position }}">x</button>
+                    <button type="button" class="remove_preview" value="{{ $image->file_name }}">x</button>
                     <div class="section image_section">
-                        <img alt="Image preview #{{ $image->position }}" src="{{ asset($image->file_path) }}">
+                        <img alt="Image Preview" src="{{ asset($image->thumbnail_path ?? $image->file_path) }}">
                     </div>
                     <div class="section inputs_section">
-                        <input type="hidden" name="image_names[]" value="{{ $image->file_name }}">
-                        <label for="caption_{{ $image->position }}">Caption</label>
+                        <input type="hidden" name="images[{{ $image->file_name }}][id]" value="{{ $image->id }}">
+                        <label for="caption_{{ $image->file_name }}">Caption</label>
                         <textarea
-                            id="caption_{{ $image->position }}"
-                            name="captions[]"
+                            id="caption_{{ $image->file_name }}"
+                            name="images[{{ $image->file_name }}][caption]"
                         >{{ $image->caption }}</textarea>
-                        <label for="position_{{ $image->position }}">Position</label>
-                        <input type="number" id="position_{{ $image->position }}" name="positions[]" value="{{ $image->position }}" readonly>
-                        <button type="button" class="arrow up">&#8593;</button>
-                        <button type="button" class="arrow down">&#8595;</button>
+                        <label for="position_{{ $image->file_name }}">Position</label>
+                        <input
+                            type="number"
+                            id="position_{{ $image->file_name }}"
+                            name="images[{{ $image->file_name }}][position]"
+                            value="{{ $image->position }}"
+                            readonly
+                        >
+                        <button type="button" class="arrow up" {{ $loop->first && 'disabled' }}>&#8593;</button>
+                        <button type="button" class="arrow down" {{ $loop->last && 'disabled' }}>&#8595;</button>
                     </div>
                 </div>
             @endforeach
