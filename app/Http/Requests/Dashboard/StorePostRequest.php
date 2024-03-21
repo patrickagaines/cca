@@ -25,7 +25,7 @@ class StorePostRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'images.required' => 'Your post must include at least one image'
