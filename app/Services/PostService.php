@@ -9,6 +9,8 @@ use App\Models\Post;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use League\Flysystem\UnableToWriteFile;
+use Throwable;
 
 class PostService
 {
@@ -28,11 +30,15 @@ class PostService
 
     public function getAll(): LengthAwarePaginator
     {
-        return $this->post->with(['images' => function (Builder $query) {
-            $query->select(['id', 'post_id', 'file_path'])
-                  ->orderBy('position')
-                  ->first();
-        }])->select(['id', 'title'])->orderBy('created_at', 'desc')->paginate(15);
+        return $this->post
+            ->with(['images' => function (Builder $query) {
+                $query->select(['id', 'post_id', 'file_path'])
+                      ->orderBy('position')
+                      ->first();
+            }])
+            ->select(['id', 'title'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
     }
 
 
@@ -49,22 +55,25 @@ class PostService
             foreach ($storePostData['images'] as $image) {
 
                 $imageFile = $storePostData['image_files'][$image['file_index']];
+                $filePath  = $imageFile->storePublicly('images', ['disk' => 'public']);
 
-                if ($filePath = $imageFile->storePublicly('images', ['disk' => 'public'])) {
-                    $imageModel = $this->image->create([
-                        'post_id'   => $post->id,
-                        'file_name' => basename($filePath),
-                        'file_path' => "storage/$filePath",
-                        'caption'   => $image['caption'],
-                        'position'  => $image['position']
-                    ]);
-
-                    OptimizeImage::dispatch($imageModel)->afterCommit();
+                if (!$filePath) {
+                    // handle exception
                 }
+
+                $imageModel = $this->image->create([
+                    'post_id'   => $post->id,
+                    'file_name' => basename($filePath),
+                    'file_path' => "storage/$filePath",
+                    'caption'   => $image['caption'],
+                    'position'  => $image['position']
+                ]);
+
+                OptimizeImage::dispatch($imageModel)->afterCommit();
             }
 
             DB::commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable|UnableToWriteFile $e) {
             DB::rollBack();
             report($e);
             throw new FailedToCreatePostException();

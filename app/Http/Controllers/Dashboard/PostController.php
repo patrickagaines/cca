@@ -34,9 +34,7 @@ class PostController extends Controller
             $post = $this->postService->create($request->validated());
 
         } catch (FailedToCreatePostException $e) {
-            report($e);
-
-            return redirect()
+            return redirect(status: $e->getCode())
                 ->back()
                 ->withInput()
                 ->with('error', $e->getMessage());
