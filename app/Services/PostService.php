@@ -9,7 +9,6 @@ use App\Models\Post;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
-use League\Flysystem\UnableToWriteFile;
 use Throwable;
 
 class PostService
@@ -57,10 +56,6 @@ class PostService
                 $imageFile = $storePostData['image_files'][$image['file_index']];
                 $filePath  = $imageFile->storePublicly('images', ['disk' => 'public']);
 
-                if (!$filePath) {
-                    // handle exception
-                }
-
                 $imageModel = $this->image->create([
                     'post_id'   => $post->id,
                     'file_name' => basename($filePath),
@@ -73,7 +68,7 @@ class PostService
             }
 
             DB::commit();
-        } catch (Throwable|UnableToWriteFile $e) {
+        } catch (Throwable $e) {
             DB::rollBack();
             report($e);
             throw new FailedToCreatePostException();

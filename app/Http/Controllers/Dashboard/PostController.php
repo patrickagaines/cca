@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Exceptions\FailedToCreatePostException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\StorePostRequest;
 use App\Services\PostService;
@@ -33,7 +32,7 @@ class PostController extends Controller
         try {
             $post = $this->postService->create($request->validated());
 
-        } catch (FailedToCreatePostException $e) {
+        } catch (\Exception $e) {
             return redirect(status: $e->getCode())
                 ->back()
                 ->withInput()
