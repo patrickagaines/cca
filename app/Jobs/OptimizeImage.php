@@ -39,14 +39,15 @@ class OptimizeImage implements ShouldQueue
             $interventionImage->save();
 
             $interventionImage->scaleDown(width: 600);
+            $interventionImage->resizeCanvas($interventionImage->width(), $interventionImage->width());
         } else {
             $interventionImage->scaleDown(width: 1920);
             $interventionImage->save();
 
             $interventionImage->scaleDown(height: 600);
+            $interventionImage->resizeCanvas($interventionImage->height(), $interventionImage->height());
         }
 
-        $interventionImage->resizeCanvas(width: 600, height: 600);
         $thumbnailFileName = substr_replace($fileName, '-600x600', strpos($fileName, '.'), 0);
         $interventionImage->save("$imagesDirectory/$thumbnailFileName");
 

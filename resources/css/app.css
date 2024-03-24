@@ -2,171 +2,263 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-    #posts_form label[for="image_upload"] {
-        @apply
-        cursor-pointer
-        rounded-md
-        border
-        border-gray-300
-        bg-white
-        px-4
-        py-2
-        text-xs
-        font-semibold
-        uppercase
-        tracking-widest
-        text-gray-700
-        shadow-sm
-        transition
-        duration-150
-        ease-in-out
-        hover:bg-gray-50;
+#flash_message {
+    @apply
+    border
+    p-2
+    absolute
+    w-full
+    z-50;
+}
+
+#flash_message.error {
+    @apply
+    bg-red-50
+    border-red-200
+    text-red-600;
+}
+
+#flash_message.success {
+    @apply
+    bg-green-50
+    border-green-200
+    text-green-600;
+}
+
+#flash_message.flash_in {
+    animation: 0.3s forwards ease-in-out flashIn;
+}
+
+#flash_message.flash_out {
+    animation: 0.5s forwards ease-in-out flashOut;
+}
+
+#image_previews > .card {
+    @apply
+    bg-white
+    rounded-sm
+    shadow
+    cursor-move
+    pb-2
+    px-2
+    pt-8
+    relative
+    sm:flex
+    items-center;
+}
+
+#image_previews > .card.disable-child-pointers > * {
+    @apply
+    pointer-events-none;
+}
+
+#image_previews > .card.over {
+    @apply
+    border-2
+    border-dashed
+    border-gray-400;
+}
+
+#image_previews > .card > button.remove_preview {
+    @apply
+    border
+    border-dashed
+    border-red-600
+    rounded-sm
+    text-red-600
+    text-xs
+    font-bold
+    leading-4
+    px-1.5
+    py-0.5
+    absolute
+    right-2
+    uppercase
+    top-2
+    hover:bg-red-500
+    hover:text-white
+    active:bg-red-700
+    focus:outline-none
+    focus:ring-2
+    focus:ring-red-500
+    focus:ring-offset-2
+    transition ease-in-out
+    duration-150;
+}
+
+#image_previews > .card > .section {
+    @apply
+    p-2;
+}
+
+#image_previews > .card > .image_section {
+    @apply
+    sm:w-1/3
+    md:w-1/4
+    lg:w-1/5;
+}
+
+#image_previews > .card > .image_section > img {
+    @apply
+    aspect-square
+    border
+    border-dashed
+    border-gray-300
+    object-cover;
+}
+
+#image_previews > .card > .inputs_section {
+    @apply
+    sm:w-2/3
+    md:w-3/4
+    lg:w-4/5;
+}
+
+#image_previews > .card > .inputs_section > button.arrow {
+    @apply
+    bg-gray-800
+    border
+    border-transparent
+    rounded-md
+    text-white
+    text-xs
+    font-semibold
+    tracking-widest
+    ml-2
+    px-2
+    py-1
+    focus:bg-gray-700
+    focus:outline-none
+    focus:ring-2
+    focus:ring-indigo-500
+    focus:ring-offset-2
+    transition ease-in-out
+    duration-150
+    disabled:hidden
+    md:hover:bg-gray-700;
+}
+
+#image_previews > .card > .inputs_section > input[type="number"] {
+    @apply
+    bg-gray-100
+    border-gray-300
+    rounded-md
+    box-border
+    cursor-default
+    mb-2
+    w-16
+    focus:outline-none
+    focus:ring-0;
+}
+
+#image_previews > .card > .inputs_section > label {
+    @apply
+    block
+    font-medium
+    text-sm
+    text-gray-700;
+}
+
+#image_previews > .card > .inputs_section > textarea {
+    @apply
+    bg-gray-100
+    border-gray-300
+    rounded-md
+    box-border
+    mb-2
+    resize-none
+    w-full
+    focus:border-indigo-500
+    focus:ring-indigo-500;
+}
+
+#posts_form label[for="image_upload"] {
+    @apply
+    cursor-pointer
+    rounded-md
+    border
+    border-gray-300
+    bg-white
+    px-4
+    py-2
+    text-xs
+    font-semibold
+    uppercase
+    tracking-widest
+    text-gray-700
+    shadow-sm
+    transition
+    duration-150
+    ease-in-out
+    hover:bg-gray-50;
+}
+
+#posts_form label[for="image_upload"].disabled {
+    @apply
+    bg-gray-200
+    text-gray-500
+    pointer-events-none;
+}
+
+@keyframes flashIn {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
     }
 
-    #posts_form label[for="image_upload"].disabled {
-        @apply
-        bg-gray-200
-        text-gray-500
-        pointer-events-none;
-    }
-
-    #image_previews > .card {
-        @apply
-        bg-white
-        rounded-sm
-        shadow
-        cursor-move
-        pb-2
-        px-2
-        pt-8
-        relative
-        sm:flex
-        items-center;
-    }
-
-    #image_previews >.card.disable-child-pointers > * {
-        @apply
-        pointer-events-none;
-    }
-
-    #image_previews > .card.over {
-        @apply
-        border-2
-        border-dashed
-        border-gray-400;
-    }
-
-    #image_previews > .card > button.remove_preview {
-        @apply
-        border
-        border-dashed
-        border-red-600
-        rounded-sm
-        text-red-600
-        text-xs
-        font-bold
-        leading-4
-        px-1.5
-        py-0.5
-        absolute
-        right-2
-        uppercase
-        top-2
-        hover:bg-red-500
-        hover:text-white
-        active:bg-red-700
-        focus:outline-none
-        focus:ring-2
-        focus:ring-red-500
-        focus:ring-offset-2
-        transition ease-in-out
-        duration-150;
-    }
-
-    #image_previews > .card > .section {
-        @apply
-        p-2;
-    }
-
-    #image_previews > .card > .image_section {
-        @apply
-        sm:w-1/3
-        md:w-1/4
-        lg:w-1/5;
-    }
-
-    #image_previews > .card > .inputs_section {
-        @apply
-        sm:w-2/3
-        md:w-3/4
-        lg:w-4/5;
-    }
-
-    #image_previews > .card > .image_section > img {
-        @apply
-        aspect-square
-        border
-        border-dashed
-        border-gray-300
-        object-cover;
-    }
-
-    #image_previews > .card > .inputs_section > label {
-        @apply
-        block
-        font-medium
-        text-sm
-        text-gray-700;
-    }
-
-    #image_previews > .card > .inputs_section > textarea {
-        @apply
-        bg-gray-100
-        border-gray-300
-        rounded-md
-        box-border
-        mb-2
-        resize-none
-        w-full
-        focus:border-indigo-500
-        focus:ring-indigo-500;
-    }
-
-    #image_previews > .card > .inputs_section > input[type="number"] {
-        @apply
-        bg-gray-100
-        border-gray-300
-        rounded-md
-        box-border
-        cursor-default
-        mb-2
-        w-16
-        focus:outline-none
-        focus:ring-0;
-    }
-
-    #image_previews > .card > .inputs_section > button.arrow {
-        @apply
-        bg-gray-800
-        border
-        border-transparent
-        rounded-md
-        text-white
-        text-xs
-        font-semibold
-        tracking-widest
-        ml-2
-        px-2
-        py-1
-        focus:bg-gray-700
-        focus:outline-none
-        focus:ring-2
-        focus:ring-indigo-500
-        focus:ring-offset-2
-        transition ease-in-out
-        duration-150
-        disabled:hidden
-        md:hover:bg-gray-700;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
+
+@keyframes flashOut {
+    to {
+        opacity: 0;
+        display: none;
+        transform: translateY(-100%);
+    }
+}
+
+@media (min-width: 640px) {
+    #flash_message {
+        @apply
+        rounded-sm
+        shadow;
+        width: 425px;
+    }
+
+    @keyframes flashIn {
+        from {
+            left: 50%;
+            top: 1rem;
+            opacity: 0;
+            transform: translate(-50%, -100%);
+        }
+
+        to {
+            left: 50%;
+            top: 1rem;
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    @keyframes flashOut {
+        from {
+            left: 50%;
+            top: 1rem;
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        to {
+            left: 50%;
+            top: 1rem;
+            opacity: 0;
+            display: none;
+            transform: translate(-50%, -100%);
+        }
+    }
+}
+
