@@ -66,8 +66,8 @@
                             value="{{ $image->position }}"
                             readonly
                         >
-                        <button type="button" class="arrow up" {{ $loop->first && 'disabled' }}>&#8593;</button>
-                        <button type="button" class="arrow down" {{ $loop->last && 'disabled' }}>&#8595;</button>
+                        <button type="button" class="arrow up" {{ $loop->first ? 'disabled' : '' }}>&#8593;</button>
+                        <button type="button" class="arrow down" {{ $loop->last ? 'disabled' : '' }}>&#8595;</button>
                     </div>
                 </div>
             @endforeach
