@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Exceptions\FailedToCreatePostException;
 use App\Exceptions\FailedToUpdatePostException;
+use App\Http\Requests\Dashboard\StorePostRequest;
+use App\Http\Requests\Dashboard\UpdatePostRequest;
 use App\Jobs\DeletePublicFiles;
 use App\Jobs\OptimizeImage;
 use App\Models\Image;
@@ -27,9 +29,8 @@ class PostService
     {
         return $this->post
             ->with(['images' => function (Builder $query) {
-                $query->select(['id', 'post_id', 'file_path'])
-                      ->orderBy('position')
-                      ->first();
+                $query->where('position', 1)
+                      ->select(['id', 'post_id', 'file_path', 'thumbnail_path']);
             }])
             ->select(['id', 'title'])
             ->orderBy('created_at', 'desc')
@@ -48,16 +49,18 @@ class PostService
     /**
      * @throws FailedToCreatePostException
      */
-    public function create($storePostData): Post
+    public function create(StorePostRequest $request): Post
     {
+        $validated = $request->validated();
+
         try {
             DB::beginTransaction();
 
-            $post = $this->post->create(['title' => $storePostData['title']]);
+            $post = $this->post->create(['title' => $validated['title']]);
 
-            foreach ($storePostData['images'] as $image) {
+            foreach ($validated['images'] as $image) {
 
-                $imageFile = $storePostData['image_files'][$image['file_index']];
+                $imageFile = $validated['image_files'][$image['file_index']];
 
                 $imageModel = $this->createImage($post->id, $imageFile, $image['caption'], $image['position']);
 
@@ -79,18 +82,20 @@ class PostService
     /**
      * @throws FailedToUpdatePostException
      */
-    public function update($updatePostData, string $postId): Post
+    public function update(UpdatePostRequest $request, string $postId): Post
     {
+        $validated = $request->validated();
+
         try {
             DB::beginTransaction();
 
-            $post = $this->post->find($postId);
-            $post->title = $updatePostData['title'];
+            $post        = $this->post->find($postId);
+            $post->title = $validated['title'];
             $post->save();
 
-            foreach ($updatePostData['images'] as $image) {
+            foreach ($validated['images'] as $image) {
                 if (isset($image['file_index'])) {
-                    $imageFile = $updatePostData['image_files'][$image['file_index']];
+                    $imageFile = $validated['image_files'][$image['file_index']];
 
                     $imageModel = $this->createImage($postId, $imageFile, $image['caption'], $image['position']);
 
@@ -100,8 +105,8 @@ class PostService
                 }
             }
 
-            if (isset($updatePostData['deleted_images'])) {
-                foreach ($updatePostData['deleted_images'] as $imageId) {
+            if (isset($validated['deleted_images'])) {
+                foreach ($validated['deleted_images'] as $imageId) {
                     $imageFiles = $this->deleteImage($imageId);
 
                     DeletePublicFiles::dispatch('images', $imageFiles)->afterCommit();
@@ -125,11 +130,11 @@ class PostService
         $filePath = $imageFile->storePublicly('images', ['disk' => 'public']);
 
         return $this->image->create([
-            'post_id' => $postId,
+            'post_id'   => $postId,
             'file_name' => basename($filePath),
             'file_path' => "storage/$filePath",
-            'caption' => $caption,
-            'position' => $position
+            'caption'   => $caption,
+            'position'  => $position
         ]);
     }
 
@@ -137,7 +142,7 @@ class PostService
     {
         $this->image->where('id', $imageId)
                     ->update([
-                        'caption' => $caption,
+                        'caption'  => $caption,
                         'position' => $position
                     ]);
     }

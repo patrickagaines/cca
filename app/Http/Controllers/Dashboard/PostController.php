@@ -31,7 +31,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         try {
-            $post = $this->postService->create($request->validated());
+            $post = $this->postService->create($request);
 
         } catch (Exception $e) {
             return redirect(status: $e->getCode())
@@ -60,7 +60,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, string $id)
     {
         try {
-            $post = $this->postService->update($request->validated(), $id);
+            $post = $this->postService->update($request, $id);
 
         } catch (Exception $e) {
             return redirect(status: $e->getCode())
