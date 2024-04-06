@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Image;
 use App\Models\Post;
+use App\Models\Service;
 use Exception;
 use Illuminate\Database\Seeder;
 
@@ -31,5 +32,7 @@ class DatabaseSeeder extends Seeder
                     ->create();
             }
         });
+
+        Service::factory(20)->create();
     }
 }
