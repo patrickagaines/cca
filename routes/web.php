@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('dashboard.posts.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('/dashboard/posts', PostController::class)
