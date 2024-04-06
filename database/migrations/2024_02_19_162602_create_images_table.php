@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('file_name', 255);
             $table->string('file_path', 255);
             $table->string('thumbnail_path', 255)->nullable();
-            $table->string('caption', 100)->nullable();
+            $table->string('caption', 60)->nullable();
             $table->unsignedInteger('position');
             $table->timestamps();
 

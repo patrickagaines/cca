@@ -57,6 +57,7 @@
                         <textarea
                             id="caption_{{ $image->file_name }}"
                             name="images[{{ $image->file_name }}][caption]"
+                            maxlength="60"
                         >{{ $image->caption }}</textarea>
                         <label for="position_{{ $image->file_name }}">Position</label>
                         <input

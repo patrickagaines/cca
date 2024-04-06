@@ -49,7 +49,7 @@ class ImageFactory extends Factory
             'file_name' => $fileName,
             'file_path' => "storage/images/$fileName",
             'thumbnail_path' => "storage/images/$thumbnailFileName",
-            'caption'   => $hasCaption ? fake()->sentence() : null,
+            'caption'   => $hasCaption ? fake()->text(60) : null,
             'position'  => null
         ];
     }

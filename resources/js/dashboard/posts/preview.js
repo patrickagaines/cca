@@ -71,6 +71,7 @@ function buildPreview(e, previewContainer, fileIndex) {
     const captionTextAreaElement = document.createElement('textarea');
     captionTextAreaElement.setAttribute('id', `caption_${uniqueIndex}`);
     captionTextAreaElement.setAttribute('name', `images[${uniqueIndex}][caption]`);
+    captionTextAreaElement.setAttribute('maxlength', '60');
 
     const displayOrderLabelElement = document.createElement('label');
     displayOrderLabelElement.setAttribute('for', `position_${uniqueIndex}`);

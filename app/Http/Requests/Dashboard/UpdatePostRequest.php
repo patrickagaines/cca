@@ -15,13 +15,13 @@ class UpdatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:100',
+            'title' => 'required|max:30',
             'image_files' => 'sometimes|array|min:1',
             'image_files.*' => 'image|mimes:jpg,jpeg,png',
             'images' => 'required|array|min:1',
             'images.*.id' => 'sometimes|required|integer',
             'images.*.file_index' => 'sometimes|required|integer',
-            'images.*.caption' => 'nullable|string|max:100',
+            'images.*.caption' => 'nullable|string|max:60',
             'images.*.position' => 'required|integer|min:1',
             'deleted_images' => 'sometimes|array',
             'deleted_images.*' => 'integer'
