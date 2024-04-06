@@ -7,7 +7,6 @@ use App\Exceptions\FailedToDeletePostException;
 use App\Exceptions\FailedToUpdatePostException;
 use App\Http\Requests\Dashboard\StorePostRequest;
 use App\Http\Requests\Dashboard\UpdatePostRequest;
-use App\Jobs\CleanupDeletedPost;
 use App\Jobs\DeletePublicFiles;
 use App\Jobs\OptimizeImage;
 use App\Models\Image;
