@@ -21,7 +21,7 @@
 
         @if(session()->has('error'))
             <x-dashboard.flash-message type="error" message="{{ session()->get('error') }}" />
-        @elseif(session()->has('success')))
+        @elseif(session()->has('success'))
             <x-dashboard.flash-message type="success" message="{{ session()->get('success') }}" />
         @endif
 
