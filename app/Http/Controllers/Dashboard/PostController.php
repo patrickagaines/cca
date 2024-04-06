@@ -69,11 +69,23 @@ class PostController extends Controller
                 ->with('error', $e->getMessage());
         }
 
-        return view ('dashboard.posts.show', ['post' => $post]);
+        return redirect()
+            ->route('dashboard.posts.show', ['post' => $post])
+            ->with('success', 'Post successfully updated');
     }
 
     public function destroy(string $id)
     {
-        dd($id);
+        try {
+            $this->postService->delete($id);
+        } catch (Exception $e) {
+            return redirect(status: $e->getCode())
+                ->back()
+                ->with('error', $e->getMessage());
+        }
+
+        return redirect()
+            ->route('dashboard.posts.index')
+            ->with('success', 'Post successfully deleted.');
     }
 }

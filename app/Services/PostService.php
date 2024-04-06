@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Exceptions\FailedToCreatePostException;
+use App\Exceptions\FailedToDeletePostException;
 use App\Exceptions\FailedToUpdatePostException;
 use App\Http\Requests\Dashboard\StorePostRequest;
 use App\Http\Requests\Dashboard\UpdatePostRequest;
+use App\Jobs\CleanupDeletedPost;
 use App\Jobs\DeletePublicFiles;
 use App\Jobs\OptimizeImage;
 use App\Models\Image;
@@ -123,6 +125,40 @@ class PostService
         }
 
         return $post;
+    }
+
+    /**
+     * @throws FailedToDeletePostException
+     */
+    public function delete(string $id): void
+    {
+        try {
+            DB::beginTransaction();
+
+            $postImages = $this->image
+                ->where('post_id', $id)
+                ->select(['file_path', 'thumbnail_path'])
+                ->get();
+
+            $imageFiles = [];
+
+            foreach ($postImages as $image) {
+                $imageFiles[] = basename($image->file_path);
+                $imageFiles[] = basename($image->thumbnail_path);
+            }
+
+            DeletePublicFiles::dispatch('images', $imageFiles)->afterCommit();
+
+            $this->post->where('id', $id)->delete();
+
+            DB::commit();
+
+        } catch (Throwable $e) {
+            DB::rollBack();
+            report($e);
+
+            throw new FailedToDeletePostException();
+        }
     }
 
     private function createImage(string $postId, UploadedFile $imageFile, string|null $caption, int $position): Image
