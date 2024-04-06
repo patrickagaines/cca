@@ -40,7 +40,8 @@ class PostController extends Controller
                 ->with('error', $e->getMessage());
         }
 
-        return view('dashboard.posts.show', ['post' => $post]);
+        return redirect()
+            ->route('dashboard.posts.show', ['post' => $post]);
     }
 
     public function show(string $id)
