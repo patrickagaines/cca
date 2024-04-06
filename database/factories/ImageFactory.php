@@ -41,7 +41,7 @@ class ImageFactory extends Factory
         }
 
         $interventionImage->resizeCanvas(width: 600, height: 600);
-        $thumbnailFileName = substr_replace($fileName, '-600x600', strpos($fileName, '.'), 0);
+        $thumbnailFileName = substr_replace($fileName, '-thumbnail', strpos($fileName, '.'), 0);
         $interventionImage->save("$imagesDirectory/$thumbnailFileName");
 
         return [

@@ -48,7 +48,7 @@ class OptimizeImage implements ShouldQueue
             $interventionImage->resizeCanvas($interventionImage->height(), $interventionImage->height());
         }
 
-        $thumbnailFileName = substr_replace($fileName, '-600x600', strpos($fileName, '.'), 0);
+        $thumbnailFileName = substr_replace($fileName, '-thumbnail', strpos($fileName, '.'), 0);
         $interventionImage->save("$imagesDirectory/$thumbnailFileName");
 
         $this->image->thumbnail_path = "storage/images/$thumbnailFileName";
