@@ -27,7 +27,7 @@
             name="title"
             class="w-full"
             required
-            maxlength="100"
+            maxlength="30"
             value="{{ $post->title ?? old('title') }}"
         />
         <x-input-error :messages="$errors->get('title')"/>

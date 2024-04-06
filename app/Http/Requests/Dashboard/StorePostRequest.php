@@ -15,7 +15,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:100',
+            'title' => 'required|max:30',
             'image_files' => 'required|array|min:1',
             'image_files.*' => 'image|mimes:jpg,jpeg,png',
             'images' => 'required|array|min:1',

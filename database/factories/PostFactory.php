@@ -20,7 +20,7 @@ class PostFactory extends Factory
         $createdAt = $this->faker->dateTimeBetween('-2years');
 
         return [
-            'title' => fake()->sentence(),
+            'title' => fake()->text(30),
             'created_at' => $createdAt,
             'updated_at' => fake()->dateTimeBetween($createdAt)
         ];
