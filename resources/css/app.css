@@ -8,7 +8,7 @@
     p-2
     absolute
     w-full
-    z-50;
+    z-20;
 }
 
 #flash_message.error {
@@ -209,7 +209,8 @@
     left-0
     top-0
     right-0
-    bottom-0;
+    bottom-0
+    z-50;
 }
 
 .window_dialogue__content_container {
