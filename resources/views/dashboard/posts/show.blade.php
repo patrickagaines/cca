@@ -14,6 +14,11 @@
                 Delete
             </x-danger-button>
         </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach($post->images as $image)
+                <x-dashboard.posts.image-card :image="$image"/>
+            @endforeach
+        </div>
     </div>
 
     <x-dashboard.window-dialogue class="confirm_delete">
