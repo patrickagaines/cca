@@ -12,7 +12,12 @@
     @isset($post)
         @method('PUT')
     @endisset
-    <div class="mb-4 flex justify-end">
+    <div class="mb-4 flex justify-end gap-2">
+        <a href="{{ url()->previous() }}">
+            <x-secondary-button>
+                Cancel
+            </x-secondary-button>
+        </a>
         <x-primary-button>
             Save
         </x-primary-button>
