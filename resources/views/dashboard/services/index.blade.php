@@ -28,8 +28,8 @@
                             {{ $service->name }}
                         </a>
                     </th>
-                    <td class="hidden border border-gray-400 px-8 py-4 md:table-cell">{{ $service->created_at }}</td>
-                    <td class="hidden border border-gray-400 px-8 py-4 md:table-cell">{{ $service->updated_at }}</td>
+                    <td class="hidden border border-gray-400 px-8 py-4 md:table-cell">{{ $service->created_at->setTimezone('America/Chicago')->format('D, M jS, Y') }}</td>
+                    <td class="hidden border border-gray-400 px-8 py-4 md:table-cell">{{ $service->updated_at->setTimezone('America/Chicago')->format('D, M jS, Y') }}</td>
                 </tr>
             @endforeach
             </tbody>
