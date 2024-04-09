@@ -5,7 +5,7 @@
         <img
             alt=""
             src="{{ asset($post->images[0]->thumbnail_path ?? $post->images[0]->file_path)  }}"
-            class="object-cover aspect-square"
+            class="aspect-square w-full object-cover"
         >
     </div>
     <div class="mb-4 h-16">
