@@ -54,7 +54,7 @@
                 <div class="card" draggable="true">
                     <button type="button" class="remove_preview" value="{{ $image->file_name }}">x</button>
                     <div class="section image_section">
-                        <img alt="Image Preview" src="{{ asset($image->thumbnail_path ?? $image->file_path) }}">
+                        <img alt="Image Preview" src="{{ asset($image->file_path) }}">
                     </div>
                     <div class="section inputs_section">
                         <input type="hidden" name="images[{{ $image->file_name }}][id]" value="{{ $image->id }}">

@@ -100,11 +100,11 @@
 
 #image_previews > .card > .image_section > img {
     @apply
-    aspect-square
+    aspect-[4/3]
     border
     border-dashed
     border-gray-300
-    object-cover;
+    object-contain;
 }
 
 #image_previews > .card > .inputs_section {
