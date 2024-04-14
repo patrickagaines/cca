@@ -20,7 +20,7 @@
                 w-[30px]
                 h-[3px]
             "
-            :class="{'delay-75 rotate-45 w-[27px]': open}"
+            :class="{'delay-75 rotate-45 !w-[27px]': open}"
         ></span>
         <span
             x-show="!open"
@@ -47,7 +47,7 @@
                 w-[30px]
                 h-[3px]
             "
-            :class="{'delay-75 -rotate-45 w-[27px]': open}"
+            :class="{'delay-75 -rotate-45 !w-[27px]': open}"
         ></span>
     </button>
 
