@@ -12,9 +12,9 @@
     <body class="antialiased">
         <div class="min-h-screen">
 
-            @include('components.site.layout.header')
+            <x-site.layout.header/>
 
-            <main class="mt-[60px]">
+            <main class="mt-[60px] lg:mt-[80px] max-w-[1440px] mx-auto">
                 {{ $slot }}
             </main>
         </div>
