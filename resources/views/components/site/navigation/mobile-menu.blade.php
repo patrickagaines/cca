@@ -24,12 +24,12 @@
         ></span>
         <span
             x-show="!open"
-            x-transition:enter="transition-all ease-out duration-200 delay-50"
-            x-transition:enter-start="opacity-0 w-[0px]"
+            x-transition:enter="transition-all ease-in duration-200"
+            x-transition:enter-start="opacity-0 !w-[0px]"
             x-transition:enter-end="opacity-100 w-[30px]"
             x-transition:leave="transition-all ease-in duration-200"
             x-transition:leave-start="opacity-100 w-[30px]"
-            x-transition:leave-end="opacity-0 w-[0px]"
+            x-transition:leave-end="opacity-0 !w-[0px]"
             class="absolute top-1/2 left-0 block -translate-y-1/2 rounded-sm bg-white w-[30px] h-[3px]"
         ></span>
         <span
