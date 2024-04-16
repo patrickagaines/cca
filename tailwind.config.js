@@ -15,11 +15,12 @@ export default {
                 'ground': '#24373C',
                 'surface': '#324C53',
                 'border': '#607176',
-                'heading': '#e9ebeb',
-                'paragraph': '#bdc3c4'
+                'heading': '#ffffff',
+                'paragraph': '#dee1e2'
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                yellowtail: ['Yellowtail', ...defaultTheme.fontFamily.sans],
             },
         },
     },

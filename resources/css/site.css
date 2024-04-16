@@ -8,6 +8,11 @@
         src: url("/resources/fonts/OpenSans-VariableFont.ttf");
     }
 
+    @font-face {
+        font-family: 'Yellowtail';
+        src: url("/resources/fonts/Yellowtail-Regular.ttf")
+    }
+
     html {
         font-size: 16px;
     }
