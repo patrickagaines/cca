@@ -59,9 +59,8 @@
         x-transition:leave="transition duration-[400ms]"
         x-transition:leave-start="opacity-100"
         x-transition:leave-end="opacity-0"
-        class="fixed right-0 bottom-0 left-0 bg-opacity-90 top-[60px] bg-ground"
+        class="fixed right-0 bottom-0 left-0 z-50 bg-opacity-90 top-[60px] bg-ground"
     >
 
     </div>
-
 </div>
