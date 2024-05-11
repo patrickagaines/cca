@@ -3,6 +3,8 @@
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\ServiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Site\GalleryController;
+use App\Http\Controllers\Site\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('site.index');
+Route::controller(HomeController::class)->group(function () {
+   Route::get('/', 'index')->name('site.home');
+});
+
+Route::controller(GalleryController::class)->group(function () {
+    Route::get('/gallery', 'index')->name('site.gallery');
 });
 
 Route::get('/dashboard', function () {
